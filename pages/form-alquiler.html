@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="shortcut icon" href="../img/logo-farmacia-footer.png" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../estilos.css">
+    <title>Ortopedia - Formulario Alquiler</title>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <div class="cont-img">
+                <a href="../index.html"><img src="../img/logo-farmacia.png" alt="logo farmacia"></a>
+            </div>
+            <ul>
+                <li><a href="../index.html">Inicio</a></li>
+                <li><a href="alquileres.html">Alquileres</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h1>Formulario de Alquiler</h1>
+        <div class="cont-form">
+            <p class="producto-seleccionado-form">Producto seleccionado: <span id="producto-seleccionado"></span></p>
+            <form id="form-alquiler">
+                <input type="hidden" id="producto" name="producto">
+                <p>
+                    <input placeholder="Nombre:" type="text" id="nombre" name="nombre" required>
+                </p>
+                <p>
+                    <input placeholder="Apellido:" type="text" id="apellido" name="apellido" required>
+                </p>
+                <p>
+                    <input placeholder="Teléfono:" type="tel" id="telefono" name="telefono" required>
+                </p>
+                <p>
+                    <input placeholder="Días de alquiler:" type="number" name="dias" id="dias" min="1" required>
+                </p>
+                <p class="precio-total-form" id="precio-total" style="font-size: 16px; margin-bottom: 20px; font-weight: 600;">Precio:</p>
+                <p>
+                    <input class="enviar" type="submit" value="Alquilar">
+                </p>
+            </form>
+        </div>
+    </main>
+    <footer>
+        <img src="../img/logo-farmacia-footer.png" alt="logo farmacia footer">
+        <p>Created by <span>Bautista Thomann</span></p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script type="module" src="../js/form-alquileres.js" defer></script>
+</body>
+
+</html>
