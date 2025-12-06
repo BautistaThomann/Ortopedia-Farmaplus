@@ -267,21 +267,10 @@ footer p span{
 }
 
 .cont-wspp{
-    display: flex;
-    align-items: center;
     position: fixed;
-    bottom: 40px;
-    right: 40px;
+    bottom: 35px;
+    right: 35px;
     z-index: 1000;
-    background-color: #f3f3f3e6;
-    border: 1px solid #e3e3e3;
-    padding: 5px 10px;
-    transition: all 0.3s ease;
-}
-
-.cont-wspp p{
-    margin-right: 10px;
-    font-size: 1.2rem;
 }
 
 .cont-wspp a{
@@ -290,8 +279,16 @@ footer p span{
     padding: 7px;
     background: #14d606;
     border-radius: 50%;
+    transition: all 0.3s ease;
 }
 
-.cont-wspp:hover{
-    background: #e3e3e3;
+.cont-wspp a:hover{
+    box-shadow: 0 0 15px #13ec0481;
+}
+
+
+@media (max-width: 1700px) {
+    .alquiler-card{
+        width: 30rem;
+    }
 }
