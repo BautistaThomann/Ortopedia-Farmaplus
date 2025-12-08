@@ -97,28 +97,30 @@ function imprimirComprobante(datos) {
         <head>
             <title>Comprobante</title>
             <style>
-                body { font-family: Arial; padding: 20px; }
-                h2 { text-align: center; }
-                p { font-size: 15px; line-height: 1.4; }
+                body { font-family: Arial; padding: 17px; }
+                p { font-size: 16px; line-height: 1.4; }
+                .columna-1, .columna-2 { width: 45%; display: inline-block; vertical-align: top; }
             </style>
         </head>
-        <body>
-            <h2>Comprobante de Alquiler</h2>
-            <p><strong>Producto:</strong> ${datos.producto}</p>
-            <p><strong>Nombre:</strong> ${datos.nombre}</p>
-            <p><strong>Apellido:</strong> ${datos.apellido}</p>
-            <p><strong>Teléfono:</strong> ${datos.telefono}</p>
-            <p><strong>Días:</strong> ${datos.dias}</p>
-            <p><strong>Fecha inicio:</strong> ${datos.fechaInicio}</p>
-            <p><strong>Fecha devolución:</strong> ${datos.fechaDevolucion}</p>
-            <p><strong>Total a pagar:</strong> ${datos.total}</p>
-            <br>
+        <body class="comprobante">
+        <h2>Comprobante de Alquiler</h2>
+            <div class="columna-1">
+                <p><strong>Producto:</strong> ${datos.producto}</p>
+                <p><strong>Nombre:</strong> ${datos.nombre}</p>
+                <p><strong>Apellido:</strong> ${datos.apellido}</p>
+                <p><strong>Teléfono:</strong> ${datos.telefono}</p>
+            </div>
+            <div class="columna-2">
+                <p><strong>Días:</strong> ${datos.dias}</p>
+                <p><strong>Fecha inicio:</strong> ${datos.fechaInicio}</p>
+                <p><strong>Fecha devolución:</strong> ${datos.fechaDevolucion}</p>
+                <p><strong>Total a pagar:</strong> ${datos.total}</p>
+            </div>
             <p>Me comprometo a cuidar el producto durante el período de alquiler y devolverlo en las mismas condiciones en la que lo recibí. En caso contrario, me hago responsable de pagar los daños o pérdidas del producto alquilado.</p>
-            <br><br>
+            <br>
             <p><strong>Firma y aclaración:</strong> ________________________</p>
             <hr>
-            <p>Gracias por confiar en nosotros</p>
-            <p>Farmacia Farmaplus</p>
+            <p>Gracias por confiar en nosotros | <strong>Farmacia Farmaplus - División Ortopedia</strong></p>
         </body>
         </html>
     `;
