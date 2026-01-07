@@ -13,7 +13,7 @@ form.addEventListener("submit", (e) => {
         sessionStorage.setItem("logueado", "true");
 
         Swal.fire({
-            title: "Logeo exitoso!",
+            title: "Logueo exitoso!",
             icon: "success",
             draggable: true
         }).then(() => {
