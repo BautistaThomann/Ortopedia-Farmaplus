@@ -1,109 +1,131 @@
-import { productos } from "../js/productos.js";
+const API_PRODUCTOS = "https://695884716c3282d9f1d53041.mockapi.io/productos";
+const API_ALQUILERES = "https://695884716c3282d9f1d53041.mockapi.io/alquileres";
 
 const params = new URLSearchParams(window.location.search);
-const nombreProducto = params.get("producto");
+const idProducto = params.get("id");
 
-// Mostrar nombre del producto
-document.getElementById("producto-seleccionado").textContent =
-    nombreProducto ? nombreProducto : "Producto no encontrado";
-
-// Guardar producto en el hidden del form
-document.getElementById("producto").value = nombreProducto;
-
-// Buscar el producto dentro del array
-const productoData = productos.find(p => p.nombre === nombreProducto);
-
-// Inputs
+const nombreProducto = document.getElementById("nombre-producto");
 const inputDias = document.getElementById("dias");
-const precioTotal = document.getElementById("precio-total");
-
+const spanTotal = document.getElementById("total");
+const mensaje = document.getElementById("mensaje");
+const btnAlquilar = document.getElementById("btn-alquilar");
 const form = document.getElementById("form-alquiler");
 
+let producto = null;
+
+inputDias.disabled = true;
+btnAlquilar.disabled = true;
+
+fetch(`${API_PRODUCTOS}/${idProducto}`)
+    .then(res => res.json())
+    .then(data => {
+        producto = data;
+        nombreProducto.textContent = producto.nombre;
+        inputDias.disabled = false;
+    })
+    .catch(() => {
+        nombreProducto.textContent = "Error al cargar producto";
+    });
+
 inputDias.addEventListener("input", () => {
-    // Si no existe el producto
-    if (!productoData) {
-        precioTotal.textContent = "Producto inválido";
+    if (!producto) return;
+
+    const dias = Number(inputDias.value);
+
+    mensaje.textContent = "";
+    btnAlquilar.disabled = false;
+
+    if (dias <= 0) {
+        spanTotal.textContent = 0;
+        btnAlquilar.disabled = true;
         return;
     }
 
-    let dias = parseInt(inputDias.value);
+    if (dias > 30) {
+        mensaje.textContent = "Máximo 30 días";
+        spanTotal.textContent = 0;
+        btnAlquilar.disabled = true;
+        return;
+    }
+
     let total = 0;
 
-    // Validación de días
-    if (dias <= 0 || isNaN(dias)) {
-        precioTotal.textContent = "—";
-        return;
-    }
-
-    if (productoData.porDia === null) {
-        if (dias === 30) {
-            precioTotal.textContent = "$ " + productoData.treintaDias;
-        } else {
-            precioTotal.textContent = "Este articulo solo se puede alquilar por 30 días.";
-        }
-        return;
-    }
-
-    // Cálculo normal
-    if (dias < 15) {
-        total = dias * productoData.porDia;
-    } else if (dias === 15) {
-        total = productoData.quinceDias;
-    } else if (dias < 30) {
-        total = productoData.quinceDias + (dias - 15) * productoData.porDia;
+    if (dias === 15) {
+        total = producto.precio15;
     } else if (dias === 30) {
-        total = productoData.treintaDias;
+        total = producto.precio30;
     } else {
-        total = productoData.treintaDias + (dias - 30) * productoData.porDia;
+        total = dias * producto.precioDia;
     }
 
-    precioTotal.textContent = "$ " + Math.round(total);
+    spanTotal.textContent = total;
 });
 
 form.addEventListener("submit", (e) => {
     e.preventDefault();
 
-    const nombre = document.getElementById("nombre").value;
-    const apellido = document.getElementById("apellido").value;
-    const telefono = document.getElementById("telefono").value;
-    const dias = parseInt(document.getElementById("dias").value);
-    const producto = nombreProducto;
-    const precio = precioTotal.textContent;
+    if (!producto) return;
 
-    const fechaInicio = new Date();
-    const fechaDevolucion = new Date();
-    fechaDevolucion.setDate(fechaInicio.getDate() + dias);
+    const nombre = document.getElementById("nombre").value.trim();
+    const apellido = document.getElementById("apellido").value.trim();
+    const telefono = document.getElementById("telefono").value.trim();
+    const dias = Number(inputDias.value);
+    const total = Number(spanTotal.textContent);
 
-    const alquiler = {
-        producto,
-        nombre,
-        apellido,
-        telefono,
-        dias,
-        total: precio,
-        fechaInicio: fechaInicio.toISOString().split("T")[0],
-        fechaDevolucion: fechaDevolucion.toISOString().split("T")[0]
-    };
-
-    // Guardar alquiler
-    let lista = JSON.parse(localStorage.getItem("alquileres")) || [];
-    lista.push(alquiler);
-    localStorage.setItem("alquileres", JSON.stringify(lista));
-
-    // ACTUALIZAR lista de productos alquilados
-    let productosAlquilados = JSON.parse(localStorage.getItem("productosAlquilados")) || [];
-
-    if (!productosAlquilados.includes(producto)) {
-        productosAlquilados.push(producto);
+    if (!nombre || !apellido || !telefono || dias <= 0 || dias > 30) {
+        mensaje.textContent = "Completá todos los datos correctamente";
+        return;
     }
 
-    localStorage.setItem("productosAlquilados", JSON.stringify(productosAlquilados));
+    const hoy = new Date();
+    const fechaInicio = hoy.toISOString().split("T")[0];
 
-    Swal.fire({
-        title: "¡Alquiler registrado con éxito!",
-        icon: "success",
-        draggable: true
-    }).then(() => {
-        window.location.href = "./alquileres.html";
-    });
+    const fechaFin = new Date(hoy);
+    fechaFin.setDate(fechaFin.getDate() + dias);
+
+    const alquiler = {
+        productoId: producto.id,
+        nombreProducto: producto.nombre,
+        cliente: `${nombre} ${apellido}`,
+        telefono: telefono,
+        dias: dias,
+        total: total,
+        fechaInicio: fechaInicio,
+        fechaFin: fechaFin.toISOString().split("T")[0]
+    };
+
+    fetch(API_ALQUILERES, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(alquiler)
+    })
+        .then(res => res.json())
+        .then(() => {
+            fetch(`${API_PRODUCTOS}/${producto.id}`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    ...producto,
+                    estado: false
+                })
+            });
+
+            Swal.fire({
+                icon: "success",
+                title: "Alquiler registrado",
+                text: "El alquiler se registró correctamente",
+                confirmButtonText: "Aceptar"
+            }).then(() => {
+                sessionStorage.setItem("recordarImpresion", "true");
+                window.location.href = "../html/alquileres.html";
+            });
+
+            btnAlquilar.disabled = true;
+            form.reset();
+            spanTotal.textContent = 0;
+            inputDias.disabled = true;
+        })
+        .catch(() => {
+            alert("Error al registrar el alquiler");
+        });
 });

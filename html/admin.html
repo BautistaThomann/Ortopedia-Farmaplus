@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../img/logo-farma-ortopedia.webp" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="shortcut icon" href="../img/logo-farmacia-footer.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../css/estilos.css">
+    <title>Ortopedia Farmaplus - Panel de administrador</title>
+</head>
+
+<body>
+    <header>
+        <div class="cont-logo-header">
+            <img src="../img/logo-farma-ortopedia.webp" alt="logo farmacia">
+        </div>
+        <h1>Panel de administrador</h1>
+        <nav>
+            <ul>
+                <li><a href="../index.html">Inicio</a></li>
+                <li><a href="../html/alquileres.html">Alquileres</a></li>
+                <li><a href="../html/admin.html">Panel de administrador</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <div class="agregar-producto">
+            <form id="form-agregar-producto">
+                <h2>Agregar nuevo producto</h2>
+                <p>
+                    <input placeholder="Nombre:" type="text" id="nombre" name="nombre" required>
+                </p>
+                <p>
+                    <input placeholder="Precio por dia:" type="number" id="precioDia" name="precio" required>
+                </p>
+                <p>
+                    <input placeholder="Precio por 15 dias:" type="number" id="precio15Dias" name="precio15Dias"
+                        required>
+                </p>
+                <p>
+                    <input placeholder="Precio por 30 dias:" type="number" id="precio30Dias" name="precio30Dias"
+                        required>
+                </p>
+                <p>
+                    <input class="agregar-producto" type="submit" value="Agregar Producto">
+                </p>
+            </form>
+            <div class="vista-producto">
+                <h2>Vista previa del producto:</h2>
+                <div id="vista-previa">
+                    <div class="producto-card vista-previa-card">
+                        <h3 id="vp-nombre">Nombre del producto</h3>
+                        <p>Día: <span id="vp-dia">$0</span></p>
+                        <p>15 días: <span id="vp-15">$0</span></p>
+                        <p>30 días: <span id="vp-30">$0</span></p>
+                        <p class="estado disponible">Disponible</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="modificar-producto">
+            <h2>Modificar productos existentes</h2>
+            <div id="lista-productos"></div>
+        </div>
+        <div class="cont-wspp">
+            <a href="https://api.whatsapp.com/send?phone=543534799038&text=Hola%20Bauti!%20Tengo%20un%20problema%20con%20el%20sistema..."
+                target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+        </div>
+    </main>
+    <footer>
+        <hr>
+        <p>Created by <strong>Bautista Thomann</strong></p>
+    </footer>
+
+    <script src="../js/auth.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../js/admin.js"></script>
+</body>
+
+</html>

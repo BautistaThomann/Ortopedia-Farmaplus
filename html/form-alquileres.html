@@ -1,35 +1,36 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../img/logo-farma-ortopedia.webp" type="image/x-icon">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="shortcut icon" href="../img/logo-farmacia-footer.png" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="../estilos.css">
-    <title>Ortopedia - Formulario Alquiler</title>
+    <link rel="stylesheet" href="../css/estilos.css">
+    <title>Formulario de alquiler</title>
 </head>
-
 <body>
     <header>
+        <div class="cont-logo-header">
+            <img src="../img/logo-farma-ortopedia.webp" alt="logo farmacia">
+        </div>
+        <h1>Formulario de Alquiler</h1>
         <nav>
-            <div class="cont-img">
-                <a href="../index.html"><img src="../img/logo-farmacia.png" alt="logo farmacia"></a>
-            </div>
             <ul>
                 <li><a href="../index.html">Inicio</a></li>
-                <li><a href="alquileres.html">Alquileres</a></li>
+                <li><a href="../html/alquileres.html">Alquileres</a></li>
+                <li><a href="../html/admin.html">Panel de administrador</a></li>
             </ul>
         </nav>
     </header>
     <main>
-        <h1>Formulario de Alquiler</h1>
+        <h1 class="h1-form-alquiler">Formulario de Alquiler</h1>
         <div class="cont-form">
-            <p class="producto-seleccionado-form">Producto seleccionado: <span id="producto-seleccionado"></span></p>
+            <p class="producto-seleccionado-form">Producto seleccionado: <span id="nombre-producto"></span></p>
             <form id="form-alquiler">
                 <input type="hidden" id="producto" name="producto">
                 <p>
@@ -44,24 +45,24 @@
                 <p>
                     <input placeholder="Días de alquiler:" type="number" name="dias" id="dias" min="1" required>
                 </p>
-                <p class="precio-total-form" id="precio-total" style="font-size: 16px; margin-bottom: 20px; font-weight: 600;">Precio:</p>
+                <p class="precio-total-form" id="precio-total">Precio: <span id="total"></span></p>
+                <p id="mensaje" class="error"></p>
                 <p>
-                    <input class="enviar" type="submit" value="Alquilar">
+                    <input id="btn-alquilar" class="enviar" type="submit" value="Confirmar Alquiler">
                 </p>
             </form>
         </div>
-
         <div class="cont-wspp">
             <a href="https://api.whatsapp.com/send?phone=543534799038&text=Hola%20Bauti!%20Tengo%20un%20problema%20con%20el%20sistema..." target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
         </div>
     </main>
     <footer>
-        <img src="../img/logo-farmacia-footer.png" alt="logo farmacia footer">
-        <p>Created by <span>Bautista Thomann</span></p>
+        <hr>
+        <p>Created by <strong>Bautista Thomann</strong></p>
     </footer>
 
+    <script src="../js/auth.js"></script>
+    <script src="../js/form-alquileres.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script type="module" src="../js/form-alquileres.js" defer></script>
 </body>
-
 </html>
