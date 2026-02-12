@@ -7,7 +7,11 @@ fetch(URL)
     .then(productos => {
         contenedor.innerHTML = "";
 
-        productos.forEach(producto => {
+        productos
+        .sort((a, b) => 
+                a.nombre.toLowerCase().localeCompare(b.nombre.toLowerCase())
+            )
+            .forEach(producto => {
             const card = document.createElement("div");
             card.classList.add("producto-card");
             
