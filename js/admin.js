@@ -158,3 +158,103 @@ function cargarEnFormulario(producto) {
 
     window.scrollTo({ top: 0, behavior: "smooth" });
 }
+
+const API_ALQUILERES = "https://695884716c3282d9f1d53041.mockapi.io/alquileres";
+
+const btnHistorial = document.getElementById("btn-historial");
+const contenedorHistorial = document.getElementById("contenedor-historial");
+const totalHistorial = document.getElementById("total-historial");
+const btnVaciar = document.getElementById("btn-vaciar");
+const btnOcultar = document.getElementById("btn-ocultar");
+
+btnHistorial.addEventListener("click", () => {
+    fetch(API_ALQUILERES)
+        .then(res => res.json())
+        .then(data => {
+            const devueltos = data.filter(a => a.estado === "devuelto");
+
+            contenedorHistorial.innerHTML = "";
+            let sumaTotal = 0;
+
+            devueltos.forEach(alquiler => {
+                sumaTotal += Number(alquiler.total);
+
+                const div = document.createElement("div");
+                div.innerHTML = `
+                    <p><strong>${alquiler.nombreProducto}</strong></p>
+                    <p>Cliente: ${alquiler.cliente}</p>
+                    <p>Fecha de Inicio: ${alquiler.fechaInicio}</p>
+                    <p>Total: $${alquiler.total}</p>
+                `;
+                contenedorHistorial.appendChild(div);
+            });
+
+            totalHistorial.innerHTML = `<h3>Total acumulado: $${sumaTotal}</h3>`;
+            btnOcultar.style.display = "block";
+            btnVaciar.style.display = "block";
+
+            if (devueltos.length === 0) {
+                contenedorHistorial.innerHTML = "<p>No hay alquileres devueltos aún.</p>";
+                totalHistorial.innerHTML = "";
+                btnVaciar.style.display = "none";
+                btnOcultar.style.display = "none";
+            }
+        });
+        btnOcultar.addEventListener("click", () => {
+            if (btnVaciar.style.display === "block") {
+                contenedorHistorial.innerHTML = "";
+                totalHistorial.innerHTML = "";
+                btnVaciar.style.display = "none";
+                btnOcultar.style.display = "none";
+            }
+    });
+});
+
+btnVaciar.addEventListener("click", () => {
+
+    Swal.fire({
+        title: "¿Vaciar historial?",
+        text: "Se eliminarán todos los alquileres devueltos",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#3085d6",
+        confirmButtonText: "Sí, vaciar",
+        cancelButtonText: "Cancelar"
+    }).then((result) => {
+
+        if (result.isConfirmed) {
+
+            fetch(API_ALQUILERES)
+                .then(res => res.json())
+                .then(data => {
+
+                    const devueltos = data.filter(a => a.estado === "devuelto");
+
+                    const eliminaciones = devueltos.map(alquiler =>
+                        fetch(`${API_ALQUILERES}/${alquiler.id}`, {
+                            method: "DELETE"
+                        })
+                    );
+
+                    return Promise.all(eliminaciones);
+                })
+                .then(() => {
+
+                    contenedorHistorial.innerHTML = "";
+                    totalHistorial.innerHTML = "";
+                    btnVaciar.style.display = "none";
+                    btnOcultar.style.display = "none";
+
+                    Swal.fire({
+                        icon: "success",
+                        title: "Historial vaciado",
+                        text: "Se eliminaron todos los registros correctamente",
+                        timer: 2000,
+                        showConfirmButton: false
+                    });
+
+                });
+        }
+    });
+});

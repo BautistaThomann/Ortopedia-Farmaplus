@@ -575,3 +575,68 @@ footer p span {
         text-align: center;
     }
 }
+
+#btn-historial{
+    font-size: 1rem;
+    background-color: #449E52;
+    color: white;
+    border: none;
+    padding: 0.4rem 0.9rem;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-left: 7rem;
+}
+
+#btn-historial:hover {
+    background-color: #3b8246;
+}
+
+#contenedor-historial div {
+    padding: 1rem;
+    padding-left: 1rem;
+    border-radius: 5px;
+    margin: 0.5rem 0 0.8rem 7rem;
+    border: 1px solid #ddd;
+    width: 85%;
+}
+
+#contenedor-historial div p {
+    margin: 5px 0;
+}
+
+#total-historial h3{
+    margin-left: 7rem;
+}
+
+#btn-vaciar{
+    font-size: 0.8rem;
+    background-color: #c94a4a;
+    color: white;
+    border: none;
+    padding: 0.4rem 0.9rem;
+    cursor: pointer;
+    border-radius: 4px;
+    margin: 1rem 7rem;
+}
+
+#btn-vaciar:hover {
+    background-color: #b03e3e;
+}
+
+#btn-ocultar {
+    font-size: 0.8rem;
+    text-decoration: underline;
+    border: none;
+    padding: 0.4rem 0.9rem;
+    cursor: pointer;
+    border-radius: 4px;
+    margin: 1rem 7rem;
+}
+
+#btn-ocultar:hover {
+    background-color: #cbcbcb;
+}
+
+#contenedor-historial p{
+    margin:1rem 0 0 7rem;
+}

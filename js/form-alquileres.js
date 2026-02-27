@@ -91,7 +91,9 @@ form.addEventListener("submit", (e) => {
         dias: dias,
         total: total,
         fechaInicio: fechaInicio,
-        fechaFin: fechaFin.toISOString().split("T")[0]
+        fechaFin: fechaFin.toISOString().split("T")[0],
+        estado: "activo", // NUEVO
+        fechaDevolucionReal: null // NUEVO
     };
 
     fetch(API_ALQUILERES, {
@@ -101,6 +103,7 @@ form.addEventListener("submit", (e) => {
     })
         .then(res => res.json())
         .then(() => {
+
             fetch(`${API_PRODUCTOS}/${producto.id}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
