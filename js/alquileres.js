@@ -105,4 +105,85 @@ function cargarAlquileres() {
         .catch(err => console.error(err));
 }
 
+function imprimirComprobante(datos) {
+
+    const contenido = `
+        <html>
+        <head>
+            <title>Comprobante de Alquiler</title>
+            <style>
+                body { 
+                    font-family: Arial; 
+                    padding: 20px; 
+                }
+                h2 { 
+                    text-align: center; 
+                }
+                .col { 
+                    width: 45%; 
+                    display: inline-block; 
+                    vertical-align: top; 
+                }
+                p { 
+                    font-size: 15px; 
+                    line-height: 1.5; 
+                }
+                hr { 
+                    margin: 20px 0; 
+                }
+            </style>
+        </head>
+        <body>
+            <h2>Comprobante de Alquiler</h2>
+
+            <div class="col">
+                <p><strong>Producto:</strong> ${datos.nombreProducto}</p>
+                <p><strong>Cliente:</strong> ${datos.cliente}</p>
+                <p><strong>Teléfono:</strong> ${datos.telefono}</p>
+            </div>
+
+            <div class="col">
+                <p><strong>Días:</strong> ${datos.dias}</p>
+                <p><strong>Fecha inicio:</strong> ${datos.fechaInicio}</p>
+                <p><strong>Fecha devolución:</strong> ${datos.fechaFin}</p>
+                <p><strong>Total:</strong> $${datos.total}</p>
+            </div>
+
+            <p>
+                Me comprometo a cuidar el producto durante el período de alquiler y devolverlo
+                en las mismas condiciones en las que lo recibí.
+            </p>
+
+            <br>
+            <p><strong>Firma:</strong> ____________________________</p>
+
+            <hr>
+            <p>Gracias por confiar en nosotros | División Ortopedia <br> 
+            <strong>Farmacia Farmaplus</strong></p>
+        </body>
+        </html>
+    `;
+
+    const iframe = document.createElement("iframe");
+    iframe.style.position = "fixed";
+    iframe.style.width = "0";
+    iframe.style.height = "0";
+    iframe.style.border = "0";
+
+    document.body.appendChild(iframe);
+
+    iframe.contentDocument.open();
+    iframe.contentDocument.write(contenido);
+    iframe.contentDocument.close();
+
+    iframe.onload = () => {
+        iframe.contentWindow.focus();
+        iframe.contentWindow.print();
+
+        setTimeout(() => {
+            document.body.removeChild(iframe);
+        }, 500);
+    };
+}
+
 cargarAlquileres();
